@@ -33,6 +33,17 @@ public class Customer {
 	}
 
 	/**
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 */
+	public Customer(String firstName, String lastName, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public Long getId() {
@@ -86,6 +97,11 @@ public class Customer {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
 	
 	
