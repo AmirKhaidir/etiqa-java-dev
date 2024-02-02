@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(path = "api/v1/customer")
 public class CustomerController {
-	
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -26,8 +28,8 @@ public class CustomerController {
 	}
 	
 	@PostMapping
-	public void addNewCustomer(@RequestBody Customer customer) {
-		customerService.addNewCustomer(customer);
+	public void addNewCustomer(@Valid @RequestBody AddCustomerRequest request) {
+		customerService.addNewCustomer(request);
 	}
 	
 	@DeleteMapping(path = "{customerId}")

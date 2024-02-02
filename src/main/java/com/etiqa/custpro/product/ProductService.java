@@ -16,6 +16,7 @@ public class ProductService {
 	private ProductRepository productRepository;
 	
 	private ModelMapper modelMapper = new ModelMapper();
+
 	public List<Product> getProducts() {
 		return productRepository.findAll();
 	}

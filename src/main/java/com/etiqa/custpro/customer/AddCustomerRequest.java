@@ -1,25 +1,16 @@
 package com.etiqa.custpro.customer;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern.Flag;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Data
 public class AddCustomerRequest {
-	private Customer customer;
-
-	/**
-	 * 
-	 */
-	public AddCustomerRequest() {
-	}
-
-	/**
-	 * @return the customer
-	 */
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	/**
-	 * @param customer the customer to set
-	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+	private String firstName;
+	private String lastName;
+	@Email(message = "The email address is invalid.", flags = { Flag.CASE_INSENSITIVE })
+	private String email;
 }

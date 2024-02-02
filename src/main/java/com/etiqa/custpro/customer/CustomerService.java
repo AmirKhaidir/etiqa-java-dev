@@ -3,23 +3,30 @@ package com.etiqa.custpro.customer;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import com.etiqa.custpro.product.Product;
+
 import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 
 @Service
+@Log4j2
 public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
+	private ModelMapper modelMapper = new ModelMapper();
+
 	public List<Customer> getCustomers() {
 		return customerRepository.findAll();
 	}
 
-	public void addNewCustomer(Customer customer) {
-		System.out.println("Add new customer: " + customer);
+	public void addNewCustomer(AddCustomerRequest request) {
+		log.info("Add new customer: " + request);
+		Customer customer = modelMapper.map(request, Customer.class);
 		Optional<Customer> custExist = customerRepository.findCustomerByEmail(customer.getEmail());
 		
 		if (custExist.isPresent()) {
