@@ -33,12 +33,12 @@ public class CustomerController {
 	}
 	
 	@DeleteMapping(path = "{customerId}")
-	public void DeleteStudent(@PathVariable Long customerId) {
+	public void DeleteCustomer(@PathVariable Long customerId) {
 		customerService.deleteCustomerById(customerId);
 	}
 	
 	@PutMapping
-	public void updateStudent(@RequestBody Customer customer) {
-		customerService.updateCustomer(customer);
+	public void updateCustomer(@Valid @RequestBody UpdateCustomerRequest request) {
+		customerService.updateCustomer(request);
 	}
 }

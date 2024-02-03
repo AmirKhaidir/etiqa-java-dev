@@ -10,7 +10,9 @@ import jakarta.validation.constraints.Pattern.Flag;
 import lombok.Data;
 
 @Data
-public class AddCustomerRequest {
+public class UpdateCustomerRequest {
+	@NotBlank(message = "Id is required!")
+	private String id;
 	@NotBlank(message = "First name is required.")
 	private String firstName;
 	@NotBlank(message = "Last name is required.")
@@ -18,5 +20,4 @@ public class AddCustomerRequest {
 	@NotBlank(message = "Email is required.")
 	@Email(message = "The email address is invalid.", flags = { Flag.CASE_INSENSITIVE })
 	private String email;
-	private List<AddFamilyRequest> families;
 }

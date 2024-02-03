@@ -1,5 +1,7 @@
 package com.etiqa.custpro.customer;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.etiqa.custpro.family.Family;
 import com.etiqa.custpro.product.Product;
 
 import jakarta.transaction.Transactional;
@@ -32,6 +35,16 @@ public class CustomerService {
 		if (custExist.isPresent()) {
 			throw new IllegalStateException("Email already registered");
 		}
+		
+		if (request.getFamilies().size() > 0) {
+			Collection<Family> families = new ArrayList<Family>();
+			request.getFamilies().forEach (family -> {
+				Family fam = modelMapper.map(family, Family.class);
+				fam.setCustomer(customer);
+				families.add(fam);
+			});
+			customer.setFamilies(families);
+		}
 		customerRepository.save(customer);
 	}
 
@@ -46,21 +59,21 @@ public class CustomerService {
 	}
 
 	@Transactional
-	public void updateCustomer(Customer customer) {
+	public void updateCustomer(UpdateCustomerRequest request) {
 		// TODO Auto-generated method stub
-		System.out.println("Update customer: " + customer);
+		System.out.println("Update customer: " + request);
 		
-		Customer cust = customerRepository.findById(customer.getId())
+		Customer cust = customerRepository.findById(Long.parseLong(request.getId()))
 				.orElseThrow(() -> new IllegalStateException("Customer does not exist"));
 		
-		Optional<Customer> isEmailExists = customerRepository.findCustomerByEmail(customer.getEmail());
+		Optional<Customer> isEmailExists = customerRepository.findCustomerByEmail(request.getEmail());
 		
 		if (isEmailExists.isPresent()) {
 			throw new IllegalStateException("Email already registered");
 		}
 		
-		cust.setFirstName(customer.getFirstName());
-		cust.setLastName(customer.getLastName());
-		cust.setEmail(customer.getEmail());
+		cust.setFirstName(request.getFirstName());
+		cust.setLastName(request.getLastName());
+		cust.setEmail(request.getEmail());
 	}
 }
