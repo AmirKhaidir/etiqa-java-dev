@@ -21,7 +21,7 @@ Install build tools:
 * MySQL8
 
 ## Usage
-* Open http://localhost:{port}/ui-swagger.html in your browser
+* Open http://localhost:{port}/swagger-ui/index.html in your browser
 * It contains two type of endpoint:
   * CustomerEndpoint
   * ProductEndpoint
